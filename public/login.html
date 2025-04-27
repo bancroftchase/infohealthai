@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Info Health AI</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f9f7; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .login-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+    input, button { width: 90%; margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #cde4db; border: none; cursor: pointer; }
+    button:hover { background: #a8d1c2; }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Login</h2>
+  <form onsubmit="loginUser(); return false;">
+    <input type="email" id="loginEmail" placeholder="Email" required><br>
+    <input type="password" id="loginPassword" placeholder="Password" required><br>
+    <button type="submit">Login</button>
+  </form>
+  <p><a href="register.html">Create New Account</a></p>
+</div>
+
+<script>
+function loginUser() {
+  const enteredEmail = document.getElementById('loginEmail').value;
+  const enteredPassword = document.getElementById('loginPassword').value;
+  const savedEmail = localStorage.getItem('savedEmail');
+  const savedPassword = localStorage.getItem('savedPassword');
+
+  if (!savedEmail || !savedPassword) {
+    alert('No registered account found. Please register first.');
+    window.location.href = 'register.html';
+  } else if (enteredEmail === savedEmail && enteredPassword === savedPassword) {
+    localStorage.setItem('loggedIn', 'true');
+    window.location.href = 'portal.html';
+  } else {
+    alert('Invalid email or password. Please try again.');
+  }
+}
+</script>
+
+</body>
+</html>

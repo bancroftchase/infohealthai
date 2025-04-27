@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Unsubscribe – Info Health AI</title>
+  <style>
+    :root {
+      --secondary: #f44336;
+      --bg: #f5f5f5;
+      --text: #333;
+      --radius: 8px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);
+      display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;}
+    .card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+      max-width:400px;width:100%;padding:30px;text-align:center;}
+    h1{font-size:1.5em;margin-bottom:0.5em;color:var(--secondary);}
+    form{text-align:left;}
+    label{display:block;margin:12px 0 4px;font-weight:bold;}
+    input, textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:var(--radius);}
+    textarea{resize:vertical;min-height:80px;}
+    button{margin-top:20px;width:100%;padding:12px;background:var(--secondary);
+      color:#fff;border:none;border-radius:var(--radius);font-size:1em;cursor:pointer;}
+    button:hover{opacity:0.9;}
+    #homeBtn{background:#888;margin-top:10px;}
+    .message{margin-top:20px;padding:15px;background:#ffebee;border:1px solid #ffcdd2;
+      border-radius:var(--radius);display:none;text-align:left;}
+    .footer{font-size:0.8em;color:#777;margin-top:1.5em;}
+    .footer a{color:var(--secondary);text-decoration:none;margin:0 5px;}
+    .footer a:hover{text-decoration:underline;}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Unsubscribe from Info Health AI</h1>
+    <form id="unsubscribeForm">
+      <label for="name">Name</label>
+      <input id="name" type="text" required placeholder="Your name" />
+
+      <label for="email">Email</label>
+      <input id="email" type="email" required placeholder="you@example.com" />
+
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" required placeholder="+1-555-123-4567" />
+
+      <label for="message">Reason (optional)</label>
+      <textarea id="message" placeholder="Reason for unsubscribing..."></textarea>
+
+      <button type="submit">Unsubscribe</button>
+    </form>
+
+    <button id="homeBtn">← Back to Home</button>
+
+    <div class="message" id="unsubscribeMessage">
+      <p><strong>Info Health AI</strong> is a brand of The Medford Group, Inc.</p>
+      <p>You have successfully unsubscribed and will no longer receive messages.</p>
+      <p>Information provided is solely for informational purposes only.</p>
+    </div>
+
+    <div class="footer">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="terms.html">Terms &amp; Conditions</a> |
+      <a href="mailto:support@infohealthai.com">Contact Us</a>
+    </div>
+  </div>
+
+  <script>
+    // Home navigation
+    document.getElementById('homeBtn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    // Unsubscribe
+    document.getElementById('unsubscribeForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        message: document.getElementById('message').value.trim()
+      };
+      try {
+        const res = await fetch('/api/unsubscribe', {
+          method: 'POST',
+          headers: { 'Content-Type':'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          e.target.style.display = 'none';
+          document.getElementById('homeBtn').style.display = 'none';
+          document.getElementById('unsubscribeMessage').style.display = 'block';
+        } else {
+          alert(data.error || 'Unsubscribe failed.');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Network error.');
+      }
+    });
+  </script>
+</body>
+</html>
+

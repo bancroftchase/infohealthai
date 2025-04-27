@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Portal - Info Health AI</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f9f7; color: #2e2e2e; margin: 0; padding: 0; }
+    header { background-color: #cde4db; padding: 20px; text-align: center; }
+    nav { background-color: #e0f2eb; display: flex; justify-content: center; gap: 10px; padding: 10px 0; }
+    nav a { background-color: #ffffff; color: #2e2e2e; padding: 10px 20px; border-radius: 5px; text-decoration: none; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .portal { padding: 30px; max-width: 1200px; margin: auto; }
+    .section { background: #ffffff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px; padding: 20px; }
+    .section h3 { text-align: center; }
+    .fields { display: flex; flex-wrap: wrap; gap: 20px; }
+    .field { flex: 1 1 45%; display: flex; flex-direction: column; }
+    label { font-size: 0.9em; margin-bottom: 5px; color: #555; }
+    input, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    textarea { resize: vertical; min-height: 80px; }
+    button { margin-top: 10px; background: #cde4db; color: #2e2e2e; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%; }
+    button:hover { background: #a8d1c2; }
+    hr { border: 0; height: 1px; background: #e0e0e0; margin: 30px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Your Health Portal</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Logout</a>
+  </nav>
+
+  <div class="portal">
+
+    <div class="section">
+      <h3>Personal Information</h3>
+      <div class="fields">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" placeholder="Enter your full name">
+        </div>
+        <div class="field">
+          <label>Date of Birth</label>
+          <input type="date">
+        </div>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="Enter your phone number">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" placeholder="Enter your email">
+        </div>
+      </div>
+      <button>Save Personal Info</button>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <h3>Pharmacy & Insurance Information</h3>
+      <div class="fields">
+        <div class="field">
+          <label>Preferred Pharmacy Name</label>
+          <input type="text" placeholder="Pharmacy name">
+        </div>
+        <div class="field">
+          <label>Pharmacy Phone Number</label>
+          <input type="tel" placeholder="Pharmacy contact number">
+        </div>
+        <div class="field">
+          <label>Insurance Provider</label>
+          <input type="text" placeholder="Provider name">
+        </div>
+        <div class="field">
+          <label>Insurance Member ID</label>
+          <input type="text" placeholder="Member ID number">
+        </div>
+      </div>
+      <button>Save Pharmacy/Insurance Info</button>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <h3>Important Contacts</h3>
+      <div class="fields">
+        <div class="field">
+          <label>Doctor's Name</label>
+          <input type="text" placeholder="Doctor's Name">
+        </div>
+        <div class="field">
+          <label>Doctor's Phone</label>
+          <input type="tel" placeholder="Doctor's phone number">
+        </div>
+        <div class="field">
+          <label>Family Contact</label>
+          <input type="text" placeholder="Family member name and phone">
+        </div>
+        <div class="field">
+          <label>Emergency Contact</label>
+          <input type="text" placeholder="Emergency contact name and phone">
+        </div>
+      </div>
+      <button>Save Important Contacts</button>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <h3>Health Goals & Notes</h3>
+      <div class="fields">
+        <div class="field">
+          <label>Weight Goal (lbs or kg)</label>
+          <input type="number" placeholder="Target weight">
+        </div>
+        <div class="field">
+          <label>Important Health Notes</label>
+          <textarea placeholder="Enter any important health notes..."></textarea>
+        </div>
+      </div>
+      <button>Save Health Goals</button>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <h3>Reminders & Calendar</h3>
+      <div class="fields">
+        <div class="field">
+          <label>Reminder Task</label>
+          <input type="text" placeholder="e.g. Take medication at 8am">
+        </div>
+        <div class="field">
+          <label>Reminder Time</label>
+          <input type="time">
+        </div>
+        <div class="field">
+          <label>Reminder Date</label>
+          <input type="date">
+        </div>
+      </div>
+      <button>Save Reminder</button>
+    </div>
+
+  </div>
+</body>
+</html>

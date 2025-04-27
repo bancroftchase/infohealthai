@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - Info Health AI</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f9f7; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .register-box { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+    input, button { width: 90%; margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #cde4db; border: none; cursor: pointer; }
+    button:hover { background: #a8d1c2; }
+  </style>
+</head>
+<body>
+
+<div class="register-box">
+  <h2>Create Account</h2>
+  <form onsubmit="saveUser(); return false;">
+    <input type="email" id="regEmail" placeholder="Email" required><br>
+    <input type="password" id="regPassword" placeholder="Password" required><br>
+    <button type="submit">Register</button>
+  </form>
+  <p><a href="login.html">Already have an account? Login</a></p>
+</div>
+
+<script>
+function saveUser() {
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPassword').value;
+  
+  // Save to Local Storage
+  localStorage.setItem('savedEmail', email);
+  localStorage.setItem('savedPassword', password);
+
+  alert('Registration successful! Please login.');
+  window.location.href = 'login.html';
+}
+</script>
+
+</body>
+</html>
+
+

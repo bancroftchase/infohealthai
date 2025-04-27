@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Portal - Info Health AI</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f5f9f7; color: #2e2e2e; margin: 0; padding: 0; }
+    header { background-color: #cde4db; padding: 20px; text-align: center; }
+    header h1 { margin: 0; font-size: 2em; }
+    nav { background-color: #e0f2eb; display: flex; justify-content: center; gap: 10px; padding: 10px 0; }
+    nav a { background-color: #ffffff; color: #2e2e2e; padding: 10px 20px; border-radius: 5px; text-decoration: none; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+    .portal { padding: 30px; text-align: center; }
+    .card { background: white; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 20px; margin: 20px auto; max-width: 500px; }
+    .card h3 { margin-top: 0; }
+    input, button { padding: 10px; margin: 10px 5px; width: 90%; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #cde4db; border: none; cursor: pointer; }
+    button:hover { background: #a8d1c2; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Your Health Portal</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Logout</a>
+  </nav>
+
+  <div class="portal">
+
+    <div class="card">
+      <h3>Personal Information</h3>
+      <input type="text" placeholder="Full Name">
+      <input type="date" placeholder="Date of Birth">
+      <input type="tel" placeholder="Phone Number">
+      <input type="email" placeholder="Email">
+    </div>
+
+    <div class="card">
+      <h3>Pharmacy Details</h3>
+      <input type="text" placeholder="Preferred Pharmacy Name">
+      <input type="tel" placeholder="Pharmacy Phone Number">
+    </div>
+
+    <div class="card">
+      <h3>Insurance Information</h3>
+      <input type="text" placeholder="Insurance Provider Name">
+      <input type="text" placeholder="Insurance Member ID">
+    </div>
+
+    <div class="card">
+      <h3>Important Contacts</h3>
+      <input type="text" placeholder="Doctor's Name and Phone">
+      <input type="text" placeholder="Family Member's Name and Phone">
+      <input type="text" placeholder="Emergency Contact Name and Phone">
+    </div>
+
+    <div class="card">
+      <h3>Health Goals</h3>
+      <input type="number" placeholder="Target Weight (lbs or kg)">
+    </div>
+
+    <div class="card">
+      <h3>Reminders & Calendar</h3>
+      <input type="text" placeholder="Reminder (e.g. Take medication)">
+      <input type="time">
+      <input type="date">
+      <button>Save Reminder</button>
+    </div>
+
+  </div>
+</body>
+</html>
