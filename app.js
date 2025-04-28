@@ -35,7 +35,7 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          'x-api-key': process.env.ANTHROPIC_API_KEY,
+          'x-api-key': process.env.CLAUDE_API_KEY, // <-- corrected to match your environment variable
           'anthropic-version': '2023-06-01',
           'Content-Type': 'application/json'
         }
@@ -60,5 +60,3 @@ app.use((req, res) => {
 app.listen(port, () => {
   console.log(`🚀 InfoHealthAI server is running at http://localhost:${port}`);
 });
-
-
