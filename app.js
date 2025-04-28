@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const bodyParser = require('body-parser');
 require('dotenv').config();
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Claude 3 Opus Web Chat Route
+// Claude 3 Opus Web Chat Route (for Website)
 app.post('/chat', async (req, res) => {
   const userMessage = req.body.message;
 
@@ -36,7 +36,7 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          'x-api-key': process.env.CLAUDE_API_KEY,
+          'x-api-key': process.env.CLAUDE_API_KEY, // correct API key
           'anthropic-version': '2023-06-01',
           'Content-Type': 'application/json'
         }
@@ -52,7 +52,7 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-// Twilio SMS Route (Still Works)
+// Claude 3 Opus SMS Route (for Twilio)
 app.post('/sms', async (req, res) => {
   const incomingMessage = req.body.Body;
   const fromNumber = req.body.From;
@@ -73,7 +73,7 @@ app.post('/sms', async (req, res) => {
       },
       {
         headers: {
-          'x-api-key': process.env.CLAUDE_API_KEY,
+          'x-api-key': process.env.CLAUDE_API_KEY, // correct API key
           'anthropic-version': '2023-06-01',
           'Content-Type': 'application/json'
         }
@@ -82,7 +82,7 @@ app.post('/sms', async (req, res) => {
 
     const botReply = response.data.content[0].text.trim();
 
-    // TwiML response for SMS
+    // Respond back to Twilio using TwiML
     const twimlResponse = `
       <Response>
         <Message>${botReply}</Message>
@@ -102,7 +102,7 @@ app.post('/sms', async (req, res) => {
   }
 });
 
-// 404 Handler for undefined routes
+// 404 Handler for any other requests
 app.use((req, res) => {
   res.status(404).send('404 - Page Not Found');
 });
