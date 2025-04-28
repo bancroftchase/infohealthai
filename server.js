@@ -5,7 +5,7 @@ const twilio = require('twilio');
 // const { ClaudeClient } = require('claude-sdk'); // Uncomment if a real SDK exists
 
 const app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 // Initialize Twilio client
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
