@@ -4,14 +4,13 @@ const fs = require('fs');
 const path = require('path');
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const rareDiseasesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'rareDiseases.json')));
 
-app.post('/api/search', (req, res) => {
-  const userMessage = req.body.message?.toLowerCase()?.trim();
-  if (!userMessage) {
-    return res.status(400).json({ error: 'Message is required' });
-  }
+app.post('/sms', (req, res) => {
+  const userMessage = req.body.Body?.toLowerCase()?.trim();
+  let response = '';
 
   function searchData(data, query) {
     let result = '';
@@ -19,22 +18,25 @@ app.post('/api/search', (req, res) => {
       if (key.toLowerCase().includes(query)) {
         result += `${key}: ${JSON.stringify(data[key])}\n`;
       } else if (typeof data[key] === 'object') {
-        const nestedResult = searchData(data[key], query);
-        if (nestedResult) {
-          result += nestedResult;
-        }
+        result += searchData(data[key], query);
       }
     });
     return result;
   }
 
-  const response = searchData(rareDiseasesData, userMessage);
+  response = searchData(rareDiseasesData, userMessage);
 
   if (!response) {
-    return res.json({ message: 'Please consult your doctor or a medical professional for personalized advice.' });
+    response = 'Please consult your doctor or a medical professional for personalized advice.';
   }
 
-  res.json({ message: response });
+  res.set("Content-Type", "text/xml");
+  res.send(`
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+      <Message>${response}</Message>
+    </Response>
+  `);
 });
 
 const port = process.env.PORT || 3000;
