@@ -1,43 +1,24 @@
 require('dotenv').config();
 const express = require('express');
 const twilio = require('twilio');
-// Assuming there's a Claude SDK available
-// const { ClaudeClient } = require('claude-sdk'); // Uncomment if a real SDK exists
-
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Initialize Twilio client
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-// Hypothetical initialization of Claude client
-// const claudeClient = new ClaudeClient(process.env.CLAUDE_API_KEY); // Uncomment if a real SDK exists
+// Twilio webhook endpoint
+app.post('/sms', (req, res) => {
+  const message = req.body.Body; // Message body
+  const from = req.body.From; // Sender's phone number
 
-// Example route to send a message using Twilio
-app.get('/send-message', (req, res) => {
-  const to = req.query.to;
-  const body = req.query.body;
+  // Process the message and respond
+  const response = `You said: ${message}`;
+  const twiml = new twilio.twiml.MessagingResponse();
+  twiml.message(response);
 
-  twilioClient.messages.create({
-    to,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    body,
-  })
-  .then(message => res.send(`Message sent with SID: ${message.sid}`))
-  .catch(error => res.status(500).send(`Error: ${error.message}`));
-});
-
-// Example route to interact with Claude
-app.get('/interact-claude', (req, res) => {
-  const prompt = req.query.prompt;
-
-  // Hypothetical interaction with Claude
-  // claudeClient.sendPrompt(prompt)
-  //   .then(response => res.send(`Claude response: ${response}`))
-  //   .catch(error => res.status(500).send(`Error: ${error.message}`));
-
-  // Placeholder response since Claude SDK is hypothetical
-  res.send(`Claude response: This is a placeholder response for prompt: ${prompt}`);
+  res.set("Content-Type", "text/xml");
+  res.send(twiml.toString());
 });
 
 app.listen(port, () => {
