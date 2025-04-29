@@ -1,16 +1,19 @@
 const express = require('express');
 const app = express();
+app.use(express.json());
 const axios = require('axios');
 
-app.use(express.json());
-
 const claudeApiUrl = 'https://api.anthropic.com/v1/messages';
-const claudeApiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+const claudeApiKey = process.env.CLAUDE_API_KEY;
+
+if (!claudeApiKey) {
+  throw new Error("CLAUDE_API_KEY environment variable is not set");
+}
 
 app.post('/sms', async (req, res) => {
-  const userMessage = req.body.Body?.toLowerCase()?.trim();
-
   try {
+    const userMessage = req.body.Body?.toLowerCase()?.trim();
+
     const response = await axios.post(claudeApiUrl, {
       model: 'claude-3-haiku-20240307',
       max_tokens: 1000,
