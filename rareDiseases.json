@@ -1,0 +1,18 @@
+{
+  "Rare Diseases": {
+    "Autoimmune & Systemic Rare Diseases": {
+      "Stiff-Person Syndrome (SPS)": {
+        "Symptoms": [
+          "Muscle rigidity",
+          "Spasms triggered by noise/stress",
+          "\"Tin soldier\" gait",
+          "Hyperlordosis (arched back)"
+        ],
+        "Treatments": [
+          "GABAergics: Diazepam, baclofen",
+          "Immunotherapy: IVIG, rituximab (if GAD65 antibody-positive)"
+        ]
+      }
+    }
+  }
+}
