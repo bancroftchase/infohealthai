@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const twilio = require('twilio');
 const axios = require('axios');
+const fallbackDictionary = require('./fallbackDictionary_common');
 const app = express();
 const port = process.env.PORT || 10000;
 
@@ -10,13 +11,39 @@ app.use(express.json());
 
 const CLAUDE_API_KEY = process.env.CLAUDE_API_KEY;
 const CLAUDE_API_URL = 'https://api.anthropic.com/v1/messages';
+const userSessions = {};
+
+function getResponse(userInput) {
+  const input = userInput.toLowerCase();
+
+  for (const category in fallbackDictionary) {
+    const entries = fallbackDictionary[category];
+    for (const key in entries) {
+      if (key.toLowerCase().includes(input)) {
+        return entries[key];
+      }
+    }
+  }
+
+  return null;
+}
 
 app.post('/sms', async (req, res) => {
   const twiml = new twilio.twiml.MessagingResponse();
   const userMessage = req.body.Body;
+  const userPhoneNumber = req.body.From;
 
-  if (!userMessage) {
-    twiml.message('Please send a message.');
+  if (!userSessions[userPhoneNumber]) {
+    twiml.message('Disclaimer: This service is for informational purposes only. By continuing, you acknowledge that you understand the limitations and risks associated with this service.');
+    userSessions[userPhoneNumber] = true;
+    res.set("Content-Type", "text/xml");
+    res.send(twiml.toString());
+    return;
+  }
+
+  const fallbackResponse = getResponse(userMessage);
+  if (fallbackResponse) {
+    twiml.message(fallbackResponse);
     res.set("Content-Type", "text/xml");
     res.send(twiml.toString());
     return;
