@@ -1,0 +1,56 @@
+{
+  "Rare Diseases": {
+    "Autoimmune & Systemic Rare Diseases": {
+      "Stiff-Person Syndrome (SPS)": {
+        "Symptoms": [
+          "Muscle rigidity",
+          "Spasms triggered by noise/stress",
+          "\"Tin soldier\" gait",
+          "Hyperlordosis (arched back)"
+        ],
+        "Treatments": [
+          "GABAergics: Diazepam, baclofen",
+          "Immunotherapy: IVIG, rituximab (if GAD65 antibody-positive)"
+        ]
+      },
+      "Eosinophilic Granulomatosis with Polyangiitis (EGPA)": {
+        "Symptoms": [
+          "Asthma",
+          "Sinusitis",
+          "Eosinophilia",
+          "Vasculitis (nerve/multi-organ damage)"
+        ],
+        "Treatments": [
+          "Corticosteroids: First-line (e.g., prednisone)",
+          "Biologics: Mepolizumab (anti-IL-5) for refractory cases"
+        ]
+      }
+    },
+    "Infectious & Parasitic Rare Diseases": {
+      "Naegleria fowleri (Brain-Eating Amoeba)": {
+        "Symptoms": [
+          "Severe headache",
+          "Fever",
+          "Vomiting",
+          "Meningeal signs (stiff neck, photophobia)"
+        ],
+        "Treatments": [
+          "Miltefosine + combo therapy: Amphotericin B, rifampin, fluconazole (if caught early)",
+          "Prevention: Avoid warm freshwater nasal exposure"
+        ]
+      }
+    },
+    "Rare Cancers": {
+      "Merkel Cell Carcinoma": {
+        "Symptoms": [
+          "Fast-growing, painless red/purple skin nodule (often sun-exposed areas)"
+        ],
+        "Treatments": [
+          "Surgery + Radiation: Primary treatment for localized cases",
+          "Immunotherapy: Avelumab (PD-L1 inhibitor) for metastatic disease"
+        ]
+      }
+    },
+    ...
+  }
+}
