@@ -8,8 +8,10 @@ app.use(express.json());
 const rareDiseasesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'rareDiseases.json')));
 
 app.post('/api/search', (req, res) => {
-  const userMessage = req.body.message.toLowerCase();
-  let response = '';
+  const userMessage = req.body.message?.toLowerCase()?.trim();
+  if (!userMessage) {
+    return res.status(400).json({ error: 'Message is required' });
+  }
 
   function searchData(data, query) {
     let result = '';
@@ -17,21 +19,25 @@ app.post('/api/search', (req, res) => {
       if (key.toLowerCase().includes(query)) {
         result += `${key}: ${JSON.stringify(data[key])}\n`;
       } else if (typeof data[key] === 'object') {
-        result += searchData(data[key], query);
+        const nestedResult = searchData(data[key], query);
+        if (nestedResult) {
+          result += nestedResult;
+        }
       }
     });
     return result;
   }
 
-  response = searchData(rareDiseasesData, userMessage);
+  const response = searchData(rareDiseasesData, userMessage);
 
   if (!response) {
-    response = 'Please consult your doctor or a medical professional for personalized advice.';
+    return res.json({ message: 'Please consult your doctor or a medical professional for personalized advice.' });
   }
 
   res.json({ message: response });
 });
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
