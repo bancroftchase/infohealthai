@@ -2,24 +2,12 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const port = 3000;
+const fs = require('fs');
 
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Fallback dictionary for common health topics
-const fallbackResponses = {
-  stroke: "Stroke is a serious medical condition where blood flow to the brain is interrupted. Seek emergency medical help immediately.",
-  diabetes: "Diabetes is a chronic condition that affects how the body processes blood sugar. Treatments include medication, diet, and exercise.",
-  hypertension: "Hypertension, or high blood pressure, increases the risk of heart disease and stroke. Management involves lifestyle changes and medications.",
-  asthma: "Asthma is a respiratory condition that causes difficulty breathing due to inflamed airways. Inhalers and medication help manage symptoms.",
-  heartattack: "A heart attack occurs when blood flow to the heart is blocked. Symptoms include chest pain, shortness of breath, and nausea. Call emergency services immediately.",
-  cancer: "Cancer refers to a group of diseases characterized by uncontrolled cell growth. Treatments vary and can include surgery, chemotherapy, and radiation therapy.",
-  depression: "Depression is a mood disorder characterized by persistent sadness and loss of interest. Treatments include therapy, medications, and support systems.",
-  flu: "The flu is a contagious respiratory illness caused by influenza viruses. Symptoms include fever, cough, sore throat, and body aches.",
-  covid: "COVID-19 is a contagious disease caused by the SARS-CoV-2 virus. Symptoms range from mild to severe, and vaccines are available.",
-  allergy: "Allergies occur when the immune system reacts to foreign substances. Treatments include avoiding triggers, antihistamines, and allergy shots."
-};
+const rareDiseasesData = JSON.parse(fs.readFileSync(path.join(__dirname, 'rareDiseases.json')));
 
 // Serve index.html when visiting the homepage
 app.get('/', (req, res) => {
@@ -27,23 +15,38 @@ app.get('/', (req, res) => {
 });
 
 // Chatbot route to handle user messages
-app.post('/chat', (req, res) => {
-  const userMessage = req.body.message;
+app.post('/sms', (req, res) => {
+  const userMessage = req.body.Body?.toLowerCase()?.trim();
+  let response = '';
 
-  if (!userMessage) {
-    return res.status(400).json({ error: 'No message provided' });
+  function searchData(data, query) {
+    let result = '';
+    Object.keys(data).forEach(key => {
+      if (key.toLowerCase().includes(query)) {
+        result += `${key}: ${JSON.stringify(data[key])}\n`;
+      } else if (typeof data[key] === 'object') {
+        const nestedResult = searchData(data[key], query);
+        if (nestedResult) {
+          result += nestedResult;
+        }
+      }
+    });
+    return result;
   }
 
-  // Normalize the user's message (lowercase, remove spaces)
-  const cleanedMessage = userMessage.toLowerCase().replace(/\s+/g, '');
+  response = searchData(rareDiseasesData, userMessage);
 
-  // Check if the cleaned message matches a fallback
-  if (fallbackResponses[cleanedMessage]) {
-    return res.json({ reply: fallbackResponses[cleanedMessage] });
+  if (!response) {
+    response = 'Please consult a medical professional for personalized advice.';
   }
 
-  // Default response if no fallback match
-  return res.json({ reply: "Thank you for your question. Please consult a medical professional for personalized advice." });
+  res.set("Content-Type", "text/xml");
+  res.send(`
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Response>
+      <Message>${response}</Message>
+    </Response>
+  `);
 });
 
 // Handle unknown routes with a 404 message
@@ -52,6 +55,7 @@ app.use((req, res) => {
 });
 
 // Start the server
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`🚀 InfoHealthAI server is running at http://localhost:${port}`);
 });
