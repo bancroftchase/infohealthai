@@ -74,6 +74,28 @@ app.post('/sms', async (req, res) => {
   }
 });
 
+app.post('/api/search', async (req, res) => {
+  const userMessage = req.body.message;
+  try {
+    const response = await axios.post(CLAUDE_API_URL, {
+      model: 'claude-3-haiku-20240307',
+      max_tokens: 1000,
+      messages: [{ role: 'user', content: userMessage }]
+    }, {
+      headers: {
+        'x-api-key': CLAUDE_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Type': 'application/json'
+      }
+    });
+    const botReply = response.data.content[0].text;
+    res.json({ message: botReply });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'An error occurred while processing your request.' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
