@@ -1,7 +1,7 @@
 {
   "name": "infohealthai",
   "version": "1.0.0",
-  "description": "",
+  "description": "A health information management application.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
